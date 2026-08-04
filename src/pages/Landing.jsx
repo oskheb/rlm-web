@@ -1,18 +1,30 @@
 import { useState } from 'react'
 import logoImg from "../assets/react_logo.png"
+import { useNavigate } from 'react-router-dom';
 
 import '../styles/Landing.css'
 
 function Landing() {
 
+  const navigate = useNavigate();
+
+  const [message, setMessage] = useState("");
+  const [showMessage, setshowMessage] = useState(false);
+
   async function handleSubmit(formData) {
     const modelName = formData.get("model")
 
 
-    if (testConnection(modelName)) {
+    if (await testConnection(modelName)) {
       console.log("pass")
+      setMessage("Loading...")
+      setshowMessage(true);
+      navigate("/chat")
     } else {
       console.log("fail")
+      setMessage("An error has occured, please make sure the Ollama API is running and you have the correct model name")
+      setshowMessage(true);
+
     }
 
   }
@@ -37,6 +49,11 @@ function Landing() {
         body: JSON.stringify(payload)
       })
 
+      //Catches response errors
+      if (await !response.ok) {
+        return false
+      }
+
       const data = await response.json();
       console.log("Model response: ", data.response)
       return true //Connection success
@@ -44,6 +61,7 @@ function Landing() {
 
     } catch (error) {
       console.log("Connection error: ", error.message)
+      return false
       //Connection failed
     }
 
@@ -58,7 +76,10 @@ function Landing() {
         <img src={logoImg} alt="react logo image" />
       </section>
 
+
+
       <form action={handleSubmit}>
+        {showMessage && <h2>{message}</h2>}
 
 
         <label>
