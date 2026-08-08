@@ -3,7 +3,7 @@
 function InputBar() {
     return (
         <form>
-            <input type="text" id="promptField" name="prompt" required />
+            <input type="text" id="promptField" name="prompt" required placeholder="Ask anything" />
         </form>
     )
 }
