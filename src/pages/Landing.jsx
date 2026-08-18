@@ -12,6 +12,7 @@ function Landing() {
   const [showMessage, setshowMessage] = useState(false);
 
   async function handleSubmit(formData) {
+    const address = formData.get("address")
     const modelName = formData.get("model")
     setMessage("Loading...")
     setshowMessage(true);
@@ -19,7 +20,7 @@ function Landing() {
 
     if (await testConnection(modelName)) {
       console.log("pass")
-      navigate("/chat", { state: { model: modelName } });
+      navigate("/chat", { state: { model: modelName, address: address } });
     } else {
       console.log("fail")
       setMessage("An error has occured, please make sure the Ollama API is running and you have the correct model name")
@@ -82,6 +83,10 @@ function Landing() {
       <form action={handleSubmit}>
         {showMessage && <h2>{message}</h2>}
 
+        <label>
+          Server Address:
+          <input type="text" id="address" name="address" required />
+        </label>
 
         <label>
           Name of LLM Model:
