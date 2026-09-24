@@ -12,15 +12,15 @@ function Landing() {
   const [showMessage, setshowMessage] = useState(false);
 
   async function handleSubmit(formData) {
-    const address = formData.get("address")
+    const addressName = formData.get("address")
     const modelName = formData.get("model")
     setMessage("Loading...")
     setshowMessage(true);
 
 
-    if (await testConnection(modelName)) {
+    if (await testConnection(modelName, addressName)) {
       console.log("pass")
-      navigate("/chat", { state: { model: modelName, address: address } });
+      navigate("/chat", { state: { model: modelName, address: addressName } });
     } else {
       console.log("fail")
       setMessage("An error has occured, please make sure the Ollama API is running and you have the correct model name")
@@ -30,12 +30,13 @@ function Landing() {
 
   }
 
-  async function testConnection(modelName) {
+  async function testConnection(modelName, addressName) {
 
 
 
     //testing that we have a connection to the ollama API
-    const url = 'http://localhost:11434/api/generate';
+    //Default local url = http://localhost:11434
+    const url = `${addressName}/api/generate`;
     const payload = {
       model: modelName,
       prompt: 'respond with only the word hello',
@@ -52,7 +53,7 @@ function Landing() {
       })
 
       //Catches response errors
-      if (await !response.ok) {
+      if (!response.ok) {
         return false
       }
 
