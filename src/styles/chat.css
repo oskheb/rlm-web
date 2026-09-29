@@ -50,6 +50,14 @@ main {
     flex: 1;
     width: 100%;
     padding: 1rem 2rem;
+    flex-direction: column;
+}
+
+main .MessageBoxDiv {
+    font-size: 20px;
+    border-radius: 30px;
+    background-color: #1E1E20;
+    padding: 16px;
 }
 
 
