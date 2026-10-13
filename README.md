@@ -3,7 +3,7 @@
 # Overview
 This is a web app written in React. The main purpose of this project was to learn React, along with learning how to interact with local AI models, even those on remote servers. 
 The application currently only supports the Ollama API, but can be expanded to support more APIs in the future. 
-The user interface is similar to that of other chatbots. It is also fairly barebones and bugs can occur. 
+The user interface is similar to that of other chatbots. It is also fairly barebones and bugs can occur, especially the UI. 
 
 # How to run
 1. Install [Ollama](https://ollama.com/).
